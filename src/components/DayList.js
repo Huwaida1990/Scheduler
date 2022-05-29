@@ -5,6 +5,7 @@ export default function DayList(props) {
 
   const dayListArray = () => {
     const listItems = []
+    console.log(props);
     props.days.map((elemnt) => {
       listItems.push(
         <DayListItem
@@ -12,7 +13,7 @@ export default function DayList(props) {
           name={elemnt.name}
           spots={elemnt.spots}
           selected={elemnt.name === props.value}
-          setDay={props.onChange}
+          setDay={props.setDay}
         />
       )
     })

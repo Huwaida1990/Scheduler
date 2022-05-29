@@ -1,17 +1,42 @@
 export function getAppointmentsForDay(state, day) {
-  let result = []
-  let myDay = [];
-  let obj1 = state['appointments']
-
-  state['days'].forEach((d) => {
-    if (d['name'] == day) myDay = d['appointments'];
+  const result = [];
+  state.days.forEach(data => {
+    if (data.name === day) {
+      data.appointments.forEach(id => {
+        if (state.appointments[id]) {
+          result.push(state.appointments[id])
+        };
+      });
+    };
   });
+  return result;
+}
 
-  for (let key in obj1) {
+export function getInterview(state, interview) {
 
-    if (myDay.includes(Number(key))) {
-      result.push(obj1[key])
+  if (interview) {
+
+    let result = { ...interview }
+    for (let key in state['interviewers']) {
+      if (key == interview['interviewer']) result['interviewer'] = state['interviewers'][key]
     }
+    return result;
+
+  } else {
+    return null;
   }
+}
+
+export function getInterviewersForDay(state, day) {
+  const result = [];
+  state.days.forEach(data => {
+    if (data.name === day) {
+      data.interviewers.forEach(id => {
+        if (state.interviewers[id]) {
+          result.push(state.interviewers[id])
+        };
+      });
+    };
+  });
   return result;
 }
