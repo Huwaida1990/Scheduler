@@ -5,7 +5,7 @@ export default function DayList(props) {
 
   const dayListArray = () => {
     const listItems = []
-    console.log(props);
+
     props.days.map((elemnt) => {
       listItems.push(
         <DayListItem
