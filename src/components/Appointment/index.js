@@ -22,7 +22,7 @@ export const Appointment = (props) => {
     props.interview ? SHOW : EMPTY
   );
 
-  function save(name, interviewer) {
+  function onSave(name, interviewer) {
     const interview = {
       student: name,
       interviewer
@@ -38,6 +38,7 @@ export const Appointment = (props) => {
   }
 
   function onConfirm() {
+
     transition(DELETING)
     props.cancelInterview(props.id)
       .then(() => { transition(EMPTY) })
@@ -61,10 +62,10 @@ export const Appointment = (props) => {
         />
       )}
       {mode === CREATE && (
-        <Form interviewers={props.interviewers} onCancel={back} save={save} />
+        <Form interviewers={props.interviewers} onCancel={back} onSave={onSave} />
       )}
       {mode === EDITING && (
-        <Form interviewers={props.interviewers} onCancel={back} save={save} student={props.interview.student} interviewer={props.interview.interviewer.id} />
+        <Form interviewers={props.interviewers} onCancel={back} onSave={onSave} name={props.interview.student} interviewer={props.interview.interviewer.id} />
       )}
       {mode === SAVING && <Status message="Saving" />}
       {mode === DELETING && <Status message="Deleting" />}
