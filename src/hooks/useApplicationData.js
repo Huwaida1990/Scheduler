@@ -26,7 +26,6 @@ export default function useApplicationData() {
 
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -35,32 +34,37 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-
-    return axios.put(`/api/appointments/${id}`, { interview })
-      .then(() => {
-        setState({
-          ...state,
-          appointments
-        })
+    const selectedDay = (element) => element.name === state.day;
+    const index = state.days.findIndex(selectedDay);
+    const days = [...state.days];
+    if (state.appointments[id].interview === null) {
+      days[index] = { ...days[index], spots: days[index].spots - 1 };
+    };
+    return (
+      axios.put(`/api/appointments/${id}`, { interview }).then(() => {
+        setState({ ...state, days, appointments })
       })
-  }
-
-  function cancelInterview(id) {
+    );
+  };
+  function cancelInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: null
+      interview: interview
     };
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-    return axios.delete(`/api/appointments/${id}`).then(() => {
-      setState({
-        ...state,
-        appointments
-      })
-    })
-  }
+    const selectedDay = (element) => element.name === state.day;
+    const index = state.days.findIndex(selectedDay);
+    const days = [...state.days];
+    days[index] = { ...days[index], spots: days[index].spots + 1 };
+    return (
+      axios.delete(`/api/appointments/${id}`, { interview }).then(() =>
+        setState({ ...state, days, appointments }))
+    );
+  };
+
 
   return { state, setDay, bookInterview, cancelInterview }
 }

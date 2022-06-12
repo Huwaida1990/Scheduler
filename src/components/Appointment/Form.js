@@ -45,12 +45,6 @@ export default function Form(props) {
               (ev) => setName(ev.target.value)
             }
             data-testid="student-name-input"
-
-          // interviewers={interviewers}
-          // onSave={onSave}
-          // interviewers={interviewers[0].id}
-
-
           />
         </form>
 

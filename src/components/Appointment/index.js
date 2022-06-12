@@ -50,7 +50,7 @@ export const Appointment = (props) => {
   }
 
   return (
-    <article className="appointment" key={props.id}>
+    <article data-testid="appointment" className="appointment" key={props.id}>
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
@@ -69,10 +69,10 @@ export const Appointment = (props) => {
       )}
       {mode === SAVING && <Status message="Saving" />}
       {mode === DELETING && <Status message="Deleting" />}
-      {mode === CONFIRM && <Confirm message="are you sure" onConfirm={onConfirm} onCancel={back} />}
+      {mode === CONFIRM && <Confirm message="Are you sure you would like to delete?" onConfirm={onConfirm} onCancel={back} />}
 
-      {mode === ERROR_SAVE && <Error message="Saving" onClose={back} />}
-      {mode === ERROR_DELETE && <Error message="Deleting" onClose={back} />}
+      {mode === ERROR_SAVE && <Error message="Not able to create appointment" onClose={back} />}
+      {mode === ERROR_DELETE && <Error message="Not able to cancel appointment" onClose={back} />}
     </article>
   )
 }
